@@ -1,7 +1,7 @@
 # LangChain sample 
 
 Sample AI console application implemented with Python, LangChain (v0.3), and OpenAI API.  
-<!-- This shows how to realize chat with history, function calling, and RAG.   -->
+This shows how to realize chat with history, function calling, and RAG.  
 
 ## Prerequisites
 
@@ -41,10 +41,13 @@ pip install -r requirements.txt
 ./run.sh
 ```
 
-## Memo 
+#### Note
 
-### Commands executed to create this project
-``` sh
-pip install langchain
-pip install langchain-openai
+Sample 3 (RAG sample) generates embedding data, and the process may fail on Windows due to some error on the dependency (probably NumPy). In this case, please comment out `rag_sample()`.
+
+In my case, the following errors occurred several times on numpy/core/getlimits.py.
 ```
+RuntimeWarning: invalid value encountered in xxx
+(xxx = exp2, nextafter, and log10)
+```
+_(I've faced no such issue on Mac so far.)_
