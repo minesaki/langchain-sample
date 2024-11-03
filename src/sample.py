@@ -1,6 +1,6 @@
 from datetime_tool import get_current_date
 from langchain_service import LangChainService
-from lib import print_prompt, print_answer
+from lib import print_answer, print_prompt
 
 
 def chat_history_sample():
@@ -12,7 +12,7 @@ def chat_history_sample():
     prompt = 'What is the capital in Japan?'
     print_prompt(prompt)
     print_answer(lang_chain.ask_without_history(prompt))
-    prompt = '日本語で'
+    prompt = '日本語で'     # in Japanese
     print_prompt(prompt)
     print_answer(lang_chain.ask_without_history(prompt))
 
@@ -21,7 +21,7 @@ def chat_history_sample():
     prompt = 'What is the capital in Japan?'
     print_prompt(prompt)
     print_answer(lang_chain.ask(prompt))
-    prompt = '日本語で'
+    prompt = '日本語で'     # in Japanese
     print_prompt(prompt)
     print_answer(lang_chain.ask(prompt))
     print()

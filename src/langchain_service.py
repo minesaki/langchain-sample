@@ -1,17 +1,13 @@
-from langchain_openai import ChatOpenAI
-from langchain_core.messages import HumanMessage
-# from langchain_core.output_parsers import StrOutputParser
-from langchain_core.tools import BaseTool
-
 from langchain.indexes import VectorstoreIndexCreator
-
-# from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain_core.vectorstores import InMemoryVectorStore
-# from langchain_text_splitters import CharacterTextSplitter
 from langchain_core.documents import Document
+from langchain_core.messages import HumanMessage
+from langchain_core.tools import BaseTool
+from langchain_core.vectorstores import InMemoryVectorStore
+from langchain_openai import ChatOpenAI
 from langchain_openai.embeddings import OpenAIEmbeddings
 
 from lib import print_debug
+
 
 class LangChainService:
     
