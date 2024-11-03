@@ -64,23 +64,16 @@ class LangChainService:
         ret2 = model_with_tool.invoke(messages)
         return ret2.content
     
-    def ask_with_store(self, prompt, index: VectorstoreIndexCreator):
+    def ask_with_embedding(self, prompt, index: VectorstoreIndexCreator):
         return index.query(prompt, self.model)
 
     def execute_embedding(self, data: list[str]) -> VectorstoreIndexCreator:
-        # text_splitter = CharacterTextSplitter(
-        #     separator = "\n",
-        #     chunk_size = 400,
-        #     chunk_overlap = 0,
-        #     length_function = len,
-        # )
         docs = []
         for d in data:
             docs.append(Document(d))
         index = VectorstoreIndexCreator(
             vectorstore_cls=InMemoryVectorStore,
             embedding=OpenAIEmbeddings(model=self.embedding_model),
-            # text_splitter=text_splitter,
         ).from_documents(docs)
         return index
     
