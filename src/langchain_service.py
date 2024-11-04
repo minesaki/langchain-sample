@@ -9,11 +9,12 @@ from langchain_openai.embeddings import OpenAIEmbeddings
 from lib import print_debug
 
 
+# env var "OPENAI_API_KEY" is implicitly used for credentials
 class LangChainService:
-    
-    modelName = 'gpt-4o-mini'
-    embedding_model = 'text-embedding-3-small'
-    model = ChatOpenAI(model_name=modelName)    # env var "OPENAI_API_KEY" is implicitly used for credentials
+
+    model_name = "gpt-4o-mini"
+    embedding_model_name = "text-embedding-3-small"
+    model = ChatOpenAI(model_name=model_name)
     # parser = StrOutputParser()
     messages = []
 
@@ -21,9 +22,7 @@ class LangChainService:
         pass
 
     def ask_without_history(self, prompt) -> str:
-        message = [
-            HumanMessage(prompt)
-        ]
+        message = [HumanMessage(prompt)]
         ret = self.model.invoke(message)
         return ret.content
         # Another example, using LCEL (LangChain Expression Language)
@@ -37,9 +36,9 @@ class LangChainService:
 
     def ask_with_func(self, tools: list[BaseTool], prompt: str) -> str:
         messages = [HumanMessage(prompt)]
-        model_with_tool = self.model.bind_tools(tools)   # Bind given functions as tools
+        model_with_tool = self.model.bind_tools(tools)  # Bind given functions as tools
 
-        # First call 
+        # First call
         ret = model_with_tool.invoke(messages)
         messages.append(ret)
 
@@ -49,17 +48,19 @@ class LangChainService:
 
         # Execute tools specified by LLM and add results to prompt
         for tool_call in ret.tool_calls:
-            print_debug('  [tool_call] ', end=''); print_debug(tool_call)
+            print_debug("  [tool_call] ", end="")
+            print_debug(tool_call)
             tool_name = tool_call["name"].lower()
             tool = self.__find_first_tool_by_name(tools, tool_name)
             tool_result = tool.invoke(tool_call)
-            print_debug('  [Added prompt] ', end=''); print_debug(tool_result)
+            print_debug("  [Added prompt] ", end="")
+            print_debug(tool_result)
             messages.append(tool_result)
 
         # Second call (with function calling results)
         ret2 = model_with_tool.invoke(messages)
         return ret2.content
-    
+
     def ask_with_embedding(self, prompt, index: VectorstoreIndexCreator):
         return index.query(prompt, self.model)
 
@@ -69,9 +70,9 @@ class LangChainService:
             docs.append(Document(d))
         index = VectorstoreIndexCreator(
             vectorstore_cls=InMemoryVectorStore,
-            embedding=OpenAIEmbeddings(model=self.embedding_model),
+            embedding=OpenAIEmbeddings(model=self.embedding_model_name),
         ).from_documents(docs)
         return index
-    
+
     def __find_first_tool_by_name(self, tools: list[BaseTool], name: str):
         return next((f for f in tools if f.name == name))

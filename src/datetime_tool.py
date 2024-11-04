@@ -9,4 +9,4 @@ def get_current_date() -> str:
     Gets today's date.
     """
     today = datetime.date.today()
-    return today.strftime('%Y/%m/%d')
+    return today.strftime("%Y/%m/%d")

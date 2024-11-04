@@ -1,0 +1,21 @@
+# Not using build-system
+# [build-system]
+# requires = ["xxxxxx"]
+# build-backend = "xxxxxx"
+
+[project]
+name = "langchain-sample"
+version = "0.0.1"
+description = "Sample app using LangChain"
+requires-python = ">=3.9"
+authors = [{ name = "Minesaki" }]
+dependencies = [
+    "langchain == 0.3.7",
+    "langchain-openai == 0.2.5",
+]
+
+[tool.black]
+line-length = 100
+
+[tool.isort]
+profile = "black"
