@@ -15,7 +15,8 @@ def print_answer(data, end: str | None = "\n"):
     print(RESET, end=end)
 
 
-def print_debug(data, end: str | None = "\n"):
+def print_debug(*data, end: str | None = "\n"):
     print(GRAY, end="")
-    print(data, end="")
+    for d in data:
+        print(d, end="")
     print(RESET, end=end)

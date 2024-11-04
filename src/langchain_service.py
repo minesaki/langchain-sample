@@ -48,13 +48,11 @@ class LangChainService:
 
         # Execute tools specified by LLM and add results to prompt
         for tool_call in ret.tool_calls:
-            print_debug("  [tool_call] ", end="")
-            print_debug(tool_call)
+            print_debug("  [tool_call] ", tool_call)
             tool_name = tool_call["name"].lower()
             tool = self.__find_first_tool_by_name(tools, tool_name)
             tool_result = tool.invoke(tool_call)
-            print_debug("  [Added prompt] ", end="")
-            print_debug(tool_result)
+            print_debug("  [Added prompt] ", tool_result)
             messages.append(tool_result)
 
         # Second call (with function calling results)
